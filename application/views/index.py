@@ -13,3 +13,7 @@ def index():
     return 'hello world'
 
 
+@index_bp.route('/add')
+def hello_world():
+    return '<h1 style="color:red;">hello liuqingqing</h1>'
+

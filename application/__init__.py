@@ -4,7 +4,9 @@
 
 import os
 
-from flask import url_for
+from flask import Flask, url_for
+
+from application.configure import setting
 
 import views
 
@@ -15,7 +17,7 @@ Blueprints = (
 
 def configure_blueprints(app, blueprints):
     for view, url_prefix in blueprints:
-        app.register_blueprint(view, url_prefix)
+        app.register_blueprint(view, url_prefix=url_prefix)
 
 
 def configure_url_for_with_timestamp(app):
@@ -35,3 +37,21 @@ def configure_url_for_with_timestamp(app):
         values['q'] = int(os.stat(file_path).st_mtime)
 
         return url_for(endpoint, **values)
+
+
+def create_app(configure=None):
+    _app = Flask(setting.APP_NAME)
+
+    configure and _app.config.from_object(configure)
+
+    configure_blueprints(_app, Blueprints)
+    configure_url_for_with_timestamp(_app)
+
+    return _app
+
+
+app = create_app(setting)
+
+if __name__ == '__main__':
+    app.run()
+

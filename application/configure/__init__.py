@@ -8,5 +8,17 @@ import development
 import production
 import testing
 
-__all__ == ['setting']
+__all__ = ['setting']
+
+current_evn = os.environ.get('FLASKY_ENV') or "development"
+
+setting = {
+    "development": development,
+    "production": production,
+    "testing": testing
+}.get(current_evn, "development")
+
+print "current_env = %s" % current_evn
+
+
 
