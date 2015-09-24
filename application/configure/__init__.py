@@ -10,7 +10,7 @@ import testing
 
 __all__ = ['setting']
 
-current_evn = os.environ.get('FLASKY_ENV') or "development"
+current_evn = os.environ.get('APPLICATION_ENV') or "development"
 
 setting = {
     "development": development,

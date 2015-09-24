@@ -4,8 +4,8 @@
 
 import os
 
-APP_NAME = 'flasky'
+APP_NAME = 'application'
 
-SECRET_KEY = 'flasky'
+SECRET_KEY = 'application'
 
 LOG_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "log")

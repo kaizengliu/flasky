@@ -3,8 +3,8 @@
 {% block javascript %}
     <script type="text/javascript">
         requirejs(["{{ url_for('static', filename='js/config.js') }}"], function () {
-            requirejs(['app/index'], function(index){
-                index.init();
+            requirejs(['app/index/index'], function(index){
+                index.init("#step-test");
             });
         });
 </script>

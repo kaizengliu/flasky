@@ -45,7 +45,7 @@ def create_app(configure=None):
     configure and _app.config.from_object(configure)
 
     configure_blueprints(_app, Blueprints)
-    #configure_url_for_with_timestamp(_app)
+    configure_url_for_with_timestamp(_app)
 
     return _app
 

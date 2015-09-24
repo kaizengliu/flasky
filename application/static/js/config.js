@@ -14,7 +14,8 @@ requirejs.config({
         underscore: 'underscore/underscore',
         backbone: 'backbone/backbone',
         bootstrap: 'bootstrap/dist/js/bootstrap.min',
-        cookie: 'cookie/src/cookie'
+        cookie: 'cookie/src/cookie',
+        text: 'text-master/text'
     },
 
     shim: {

@@ -4,20 +4,16 @@
 
 define(function(require, exports){
     var $ = require('jquery');
-    var _ = require('backbone');
+    var _ = require('underscore');
 
-    var timeTpl = _.template(
-                  "<div class='step-clock'>" +
-                     "<span class='date'><%- month %>/<%-day%></span>" +
-                     "<span class='time><%- [hour, minute, seconds].join(':') %></span>" +
-                  "</div>");
+    var timeTpl = _.template(require('text!./templates/time.tpl'));
 
     exports.formatTime = function (date) {
         var time = {
             month:  date.getMonth(),
             day: date.getDate(),
-            hour: date.getHours(),
-            minute: date.getMinutes(),
+            hours: date.getHours(),
+            minutes: date.getMinutes(),
             seconds: date.getSeconds()
         };
 
