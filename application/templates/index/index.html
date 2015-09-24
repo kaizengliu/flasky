@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block javascript %}
+    <script type="text/javascript">
+        requirejs(["{{ url_for('static', filename='js/config.js') }}"], function () {
+            requirejs(['app/index'], function(index){
+                index.init();
+            });
+        });
+</script>
+{% endblock %}
+
+{% block body_content %}
+    <h1>{{ title }}</h1>
+    <div id="step-test">
+
+    </div>
+{% endblock %}

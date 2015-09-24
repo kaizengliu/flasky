@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang=zh-CN">
+<head>
+    {% block title -%}
+        <title>{{ "step note" }}</title>
+    {% endblock -%}
+
+    {% include "include/meta.html" %}
+
+    {% include "include/links.html" -%}
+
+    {% block css %}{% endblock -%}
+
+    {% include "include/scripts.html" -%}
+
+    {% block javascript -%}{%- endblock -%}
+</head>
+<!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
+<!--[if IE 7 ]> <body class="ie ie7 {{ config.get('BODY_TAG') }}"> <![endif]-->
+<!--[if IE 8 ]> <body class="ie ie8 {{ config.get('BODY_TAG') }}"> <![endif]-->
+<!--[if IE 9 ]> <body class="ie ie9 {{ config.get('BODY_TAG') }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<body class="{{ config.get('BODY_TAG') }}">
+<!--<![endif]-->
+{% block body_content %} {% endblock %}
+</body>
+</html>

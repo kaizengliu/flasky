@@ -5,12 +5,16 @@
 from flask import render_template
 from flask.blueprints import Blueprint
 
-index_bp = Blueprint('index', __name__)
+index_bp = Blueprint('index', __name__, template_folder="../templates")
 
 
 @index_bp.route('/')
 def index():
-    return 'hello world'
+    context = {
+        "title": "Hello World"
+    }
+
+    return render_template("index/index.html", **context)
 
 
 @index_bp.route('/add')
