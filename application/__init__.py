@@ -4,9 +4,12 @@
 
 import os
 
-from flask import Flask, url_for
+from flask import Flask, url_for, g
+from flask.ext.login import LoginManager, AnonymousUserMixin
+from threading import local
 
 from application.configure import setting
+from application.models.user import User
 
 import views
 
@@ -37,6 +40,20 @@ def configure_url_for_with_timestamp(app):
         values['q'] = int(os.stat(file_path).st_mtime)
 
         return url_for(endpoint, **values)
+
+
+def config_login_manager(app):
+    login_manager = LoginManager()
+    login_manager.login_view = "index.login"
+
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def user_loader(user_id):
+        if user_id:
+            return User.session.query(User).get(User.id == user_id)
+        else:
+            return AnonymousUserMixin()
 
 
 def create_app(configure=None):
