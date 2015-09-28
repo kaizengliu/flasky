@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block body_content %}
+    <p>亲爱的{{ username }}, 欢迎加入<a href="{{ host_url }}">{{ app }}</a></p>
+
+    <p>'请于一小时内前去激活您的帐号。如无法点击，请将地址复制到地址栏中。'</p>
+
+    <p>
+        <a href="{{ host_url }}user_active?key={{ key }}&email={{ email }}" class="btn btn-success btn-lg btn-block">{{'登录'}}</a>
+    </p>
+{% endblock %}

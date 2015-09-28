@@ -2,11 +2,15 @@
 # author: lkz
 # date: 2015/09/25 17:14
 
+import redis
+
 from sqlalchemy import Column, Integer, String, Boolean
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.login import UserMixin
 
-from base import Base, db_session
+from application.models.base import Base, db_session
+from application.utils.redis_cli import redis_cli
+from application.configure import setting
 
 
 class User(Base, UserMixin):
@@ -49,6 +53,31 @@ class User(Base, UserMixin):
         raise AttributeError("User's password is not a readable attribute")
 
     @password.setter
-    def password(self, _password):
-        self.password_hash = generate_password_hash(_password)
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
 
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    def send_register_mail(self):
+        import random
+        import string
+
+        from flask import request
+        from application.utils.mail.mail_template import get_register_email_content
+        from application.utils.mail.send_mail import send_mail
+
+        random.seed()
+        key = ".".join(random.sample(string.letters + string.digits, 48))
+        redis_cli.set(key, self.id)
+
+        context = {
+            "user_name": self.username,
+            "host_url": request.host_url or "127.0.0.1:5000",
+            "key": key,
+            "email": self.email
+        }
+
+        email_content = get_register_email_content(**context)
+        email_title = u"欢迎加入%s" % setting.APP_NAME
+        send_mail = send_mail(email_title, email_content, [self.email])

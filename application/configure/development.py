@@ -5,3 +5,14 @@
 from base import *
 
 DEBUG = True
+
+
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = True
+EMAIL_TIME_OUT = 10
+EMAIL_HOST_USER = 'liukaizeng123@163.com'
+EMAIL_HOST_PASSWORD = '19900110lkz'
+
+REDIS_HOST = '10.209.68.178'
+REDIS_PORT = 6379
