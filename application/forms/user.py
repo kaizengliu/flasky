@@ -10,8 +10,8 @@ from application.models.user import User
 
 
 class LoginForm(Form):
-    email = StringField(u'邮箱', validators=[DataRequired(u'邮箱不能为空')], description=u"注册时所用邮箱")
-    password = StringField(u'密码', validators=[DataRequired(u'密码不能为空'), Email], description=u"密码")
+    email = StringField(u'邮箱', validators=[DataRequired(u'邮箱不能为空'), Email()], description=u"注册时所用邮箱")
+    password = StringField(u'密码', validators=[DataRequired(u'密码不能为空')], description=u"密码")
 
     def validate_email(form, field):
         email = field.data.strip().lower()
@@ -25,6 +25,10 @@ class LoginForm(Form):
         email = form.email.data.strip().lower()
         password = field.data.strip()
 
-        user = User.query.filter(User.email == email).one()
+        user = User.query.filter(User.email == email).first()
+
+        if not user:
+            return
+
         if not user.verify_password(password):
             raise ValidationError(u'密码错误')
