@@ -13,7 +13,7 @@ auth_bp = Blueprint('auth', __name__, template_folder="../templates")
 
 @auth_bp.route('/login', methods=['POST', 'GET'])
 def login():
-    form = LoginForm(request)
+    form = LoginForm()
 
     context = {
         "form": form

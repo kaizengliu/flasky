@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('mysql://lkz:asdfjkl;@10.209.68.178:3306/blog', encoding='utf-8', echo=True)
+engine = create_engine('mysql://lkz:asdfjkl;@10.209.68.178:3306/blog', encoding='utf-8')
 db_session = scoped_session(
     sessionmaker(autocommit=False, autoflush=False, bind=engine)
 )
