@@ -7,5 +7,30 @@
 {% endblock %}
 
 {% block body_content %}
+    <form class="form" method="post">
+        {{ form.csrf_token }}
 
+        <div class="form-group">
+            <label>邮箱</label>
+            {{ form.email(class="form-control", placeholder=form.email.description) }}
+
+            {% if form.errors.email %}
+                <p class="text-danger">{{ form.errors.email[0] }}</p>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label>密码</label>
+            {{ form.password(class="form-control", placeholder=form.password.description) }}
+            {% if form.errors.password %}
+                <p class="text-danger">{{ form.erros.password }}</p>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">
+                登陆
+            </button>
+        </div>
+    </form>
 {% endblock %}

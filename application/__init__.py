@@ -15,6 +15,7 @@ import views
 
 Blueprints = (
     (views.index_bp, ''),
+    (views.auth_bp, '/auth')
 )
 
 

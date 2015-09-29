@@ -81,3 +81,7 @@ class User(Base, UserMixin):
         email_content = get_register_email_content(**context)
         email_title = u"欢迎加入%s" % setting.APP_NAME
         send_mail = send_mail(email_title, email_content, [self.email])
+
+
+if __name__ == '__main__':
+    print User.__table__
