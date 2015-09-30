@@ -66,9 +66,6 @@ def active_account():
     key = request.args.get('key')
     email = request.args.get('email')
 
-    print key
-    print email
-
     if not key or not email:
         abort(404)
 
