@@ -43,7 +43,7 @@ class User(Base, UserMixin):
             db_session.rollback()
 
     def get_id(self):
-        return unichr(self.id)
+        return unicode(self.id)
 
     def is_active(self):
         return self.active
@@ -59,29 +59,30 @@ class User(Base, UserMixin):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def send_register_mail(self):
+    def send_register_mail(self, host_url):
         import random
         import string
 
-        from flask import request
         from application.utils.mail.mail_template import get_register_email_content
         from application.utils.mail.send_mail import send_mail
 
         random.seed()
-        key = ".".join(random.sample(string.letters + string.digits, 48))
+        key = "".join(random.sample(string.letters + string.digits, 48))
         redis_cli.set(key, self.id)
 
         context = {
             "user_name": self.username,
-            "host_url": request.host_url or "127.0.0.1:5000",
+            "host_url": host_url,
             "key": key,
             "email": self.email
         }
 
         email_content = get_register_email_content(**context)
         email_title = u"欢迎加入%s" % setting.APP_NAME
-        send_mail = send_mail(email_title, email_content, [self.email])
+        send_mail(email_title, email_content, [self.email])
 
 
 if __name__ == '__main__':
-    print User.__table__
+    #user = db_session.query(User).limit(1).fisrt()
+    #user = User.query.limit(1).first()
+    pass

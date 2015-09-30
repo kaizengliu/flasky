@@ -15,7 +15,7 @@ from application.configure import setting
 def send_mail(subject, text, to=[], files=None):
     msg = MIMEMultipart()
 
-    email_from = u'刘开增<liukaizeng123@163.com>'.encode('utf-8')
+    email_from = u'刘开增<liukaizeng1111@126.com>'.encode('utf-8')
 
     msg['From'] = email_from
     msg['Subject'] = subject
@@ -33,4 +33,4 @@ def send_mail(subject, text, to=[], files=None):
 
 
 if __name__ == '__main__':
-    print _get_template_path()
+    send_mail('sdfsd', 'sdfsdf', ['1051299241@qq.com'])

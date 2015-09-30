@@ -17,4 +17,4 @@ env = Environment(loader=loader)
 
 
 def get_register_email_content(**kwargs):
-    env.get_template('register.html').render(kwargs)
+    return env.get_template('register.html').render(kwargs)

@@ -1,0 +1,10 @@
+{% macro render_form_field(field) %}
+    <div class="form-group">
+        <label>{{ field.label }}</label>
+        {{ field(class="form-control", placeholder=field.description) }}
+
+        {% if field.errors %}
+            <p>{{ field.errors[0] }}</p>
+        {% endif %}
+    </div>
+{% endmacro %}

@@ -13,7 +13,7 @@ conn_str = "mysql://{user}:{password}@{host}:{port}/{db_name}".format(**setting.
 engine = create_engine(conn_str, encoding='utf-8')
 
 db_session = scoped_session(
-    sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    sessionmaker(autocommit=False, autoflush=True, bind=engine)
 )
 
 Base = declarative_base()

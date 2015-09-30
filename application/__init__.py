@@ -31,11 +31,11 @@ def configure_url_for_with_timestamp(app):
 
     def dated_url_for(endpoint, **values):
         if endpoint != 'static':
-            return
+            return url_for(endpoint, **values)
 
         filename = values.get('filename', None)
         if not filename:
-            return
+            return url_for(endpoint, **values)
 
         file_path = os.path.join(app.root_path, endpoint, filename)
         values['q'] = int(os.stat(file_path).st_mtime)
@@ -43,16 +43,16 @@ def configure_url_for_with_timestamp(app):
         return url_for(endpoint, **values)
 
 
-def config_login_manager(app):
+def configure_login_manager(app):
     login_manager = LoginManager()
-    login_manager.login_view = "index.login"
+    login_manager.login_view = "auth.login"
 
     login_manager.init_app(app)
 
     @login_manager.user_loader
     def user_loader(user_id):
         if user_id:
-            return User.session.query(User).get(User.id == user_id)
+            return User.query.get(user_id)
         else:
             return AnonymousUserMixin()
 
@@ -64,6 +64,7 @@ def create_app(configure=None):
 
     configure_blueprints(_app, Blueprints)
     configure_url_for_with_timestamp(_app)
+    configure_login_manager(_app)
 
     return _app
 

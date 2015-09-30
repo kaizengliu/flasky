@@ -7,4 +7,21 @@
 {% endblock %}
 
 {% block body_content %}
+    <form class="form register-form" method="POST">
+        {{ form.csrf_token }}
+    　　　
+        {{ macros.render_form_field(form.email) }}
+        {{ macros.render_form_field(form.password) }}
+        {{ macros.render_form_field(form.password_check) }}
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">
+                注册
+            </button>
+
+            <a href="{{ url_for('auth.login') }}" class="btn">
+                登陆
+            </a>
+        </div>
+    </form>
 {% endblock %}

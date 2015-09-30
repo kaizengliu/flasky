@@ -11,8 +11,34 @@
 {% endblock %}
 
 {% block body_content %}
-    <h1>{{ title }}</h1>
+    {% if current_user.is_authenticated %}
+        <h1>{{ current_user.username }}</h1>
+
+        <p class="text-success">您已经成为注册用户</p>
+
+        {% if not current_user.active %}
+            <p class="text-danger">
+                请到注册邮箱点击激活账号
+            </p>
+        {% endif %}
+
+        <p>
+            <a href="{{ url_for('auth.logout') }}">
+                退出
+            </a>
+        </p>
+    {% else %}
+        <h1>{{ title }}</h1>
+        <p>
+            <a href="{{ url_for('auth.login') }}">登陆</a>
+        </p>
+        <p>
+            <a href="{{ url_for('auth.register') }}">注册</a>
+        </p>
+    {% endif %}
+
     <div id="step-test">
 
     </div>
+
 {% endblock %}
