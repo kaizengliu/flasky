@@ -16,3 +16,11 @@ EMAIL_HOST_PASSWORD = '19900110lkz'
 
 REDIS_HOST = '10.209.68.178'
 REDIS_PORT = 6379
+
+DB = {
+    'host': '10.209.68.198',
+    'port': 3306,
+    'user': 'lkz',
+    'password': 'asdfjkl;',
+    'db_name': 'blog'
+}
