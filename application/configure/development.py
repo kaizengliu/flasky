@@ -22,5 +22,5 @@ DB = {
     'port': 3306,
     'user': 'lkz',
     'password': 'asdfjkl;',
-    'db_name': 'blog',
+    'db_name': 'blog'
 }
