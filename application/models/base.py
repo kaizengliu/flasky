@@ -8,7 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from application.configure import setting
 
-conn_str = "mysql://{user}:{password}@{host}:{port}/{db_name}".format(**setting.DB)
+conn_str = "mysql+pymysql://{user}:{password}@{host}:{port}/{db_name}".format(**setting.DB)
 
 engine = create_engine(conn_str, encoding='utf-8')
 
