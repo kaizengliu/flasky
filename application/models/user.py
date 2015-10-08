@@ -23,6 +23,7 @@ class User(Base, UserMixin):
     active = Column(Boolean, default=False)
     avatar_hash = Column(String(32))
 
+
     @staticmethod
     def generate_fake(count=100):
         from sqlalchemy.exc import IntegrityError
@@ -68,7 +69,7 @@ class User(Base, UserMixin):
 
         random.seed()
         key = "".join(random.sample(string.letters + string.digits, 48))
-        redis_cli.set(key, self.id)
+        redis_cli.setex(key, 600, self.id)
 
         context = {
             "user_name": self.username,

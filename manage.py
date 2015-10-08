@@ -7,6 +7,7 @@ from application import app
 
 manager = Manager(app)
 
+import migrate
 
 if __name__ == '__main__':
     manager.run()
