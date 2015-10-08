@@ -10,7 +10,7 @@ define(function(require, exports){
 
     exports.formatTime = function (date) {
         var time = {
-            month:  date.getMonth(),
+            month:  date.getMonth() + 1,
             day: date.getDate(),
             hours: date.getHours(),
             minutes: date.getMinutes(),
