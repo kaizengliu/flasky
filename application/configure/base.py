@@ -8,4 +8,4 @@ APP_NAME = 'application'
 
 SECRET_KEY = 'application'
 
-LOG_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "log")
+LOG_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "log", "log.txt")

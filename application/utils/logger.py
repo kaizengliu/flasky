@@ -5,6 +5,9 @@
 
 import logging
 
+from application.utils.mq_log import MQHandler
+from application.configure import setting
+
 
 #The background is set with 40 plus the number of the color, and the foreground with 30
 BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = [30 + i for i in range(8)]
@@ -45,20 +48,44 @@ class ColoredFormatter(logging.Formatter):
 
         return logging.Formatter.format(self, record)
 
-logger = logging.getLogger('main')
 
-logger.info('dfd')
+def get_logger(name=__name__, log_level='debug', log_file=None):
+    _log_level = getattr(logging, log_level.upper(), None)
 
-sh = logging.StreamHandler()
-fm = ColoredFormatter("%(asctime)s\t%(process)d|%(thread)d\t%(levelname)s\t%(module)s\t%(funcName)s:%(lineno)d\t%(message)s", "%Y-%m-%d@%H:%M:%S")
+    if not _log_level:
+        raise Exception("No such log level. log level should be one of notest, debug, info, warning, error, critical.")
 
-sh.setFormatter(fm)
+    logger = logging.getLogger(name)
+    logger.setLevel(_log_level)
 
-logger.addHandler(sh)
-logger.setLevel(logging.DEBUG)
+    if log_file is not None:
+        handler = logging.FileHandler(log_file)
+    else:
+        handler = MQHandler(setting.AMQP_HOST, setting.AMQP_PORT, setting.AMQP_USER_NAME, setting.AMQP_PASSWORD,
+                            setting.AMQP_EXCHANGE, virtual_host=setting.AMQP_VIRTUAL_HOST,
+                            machine_id=setting.MACHINE, process_id=setting.PROCESS)
 
-import cStringIO
+    formatter = ColoredFormatter("%(asctime)s\t%(process)d|%(thread)d\t%(levelname)s\t%(module)s\t%(funcName)s:%(lineno)d\t%(message)s", "%Y-%m-%d@%H:%M:%S")
+    handler.setFormatter(formatter)
 
-str_buffer = cStringIO.StringIO()
+    logger.addHandler(handler)
 
-buffer_handler = logging.StreamHandler(stream=str_buffer)
+    return logger
+
+flask_logger = get_logger("flask_log", 'debug', setting.LOG_PATH)
+# flask_logger = get_logger("flask_log", 'debug')
+#
+# import time
+#
+# start = time.time()
+# flask_logger.error("Hello World")
+# print time.time() - start
+#
+# start = time.time()
+# flask_logger.error("Hello World")
+# print time.time() - start
+#
+# start = time.time()
+# with open('temp', mode='w') as f:
+#     f.write('Hello World')
+# print time.time() - start

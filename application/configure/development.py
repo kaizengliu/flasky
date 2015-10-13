@@ -35,3 +35,17 @@ DB = {
 #     "user": 'blog',
 #     "password": 'blog'
 # }
+
+
+# machine name, used to identity different machines
+MACHINE = "nx"
+
+# machine name, used to identity different processes
+PROCESS = "flasky"
+
+AMQP_HOST = "10.209.68.178"
+AMQP_PORT = 5672
+AMQP_VIRTUAL_HOST = "vn1"
+AMQP_USER_NAME = 'less'
+AMQP_PASSWORD = 'asdfjkl'
+AMQP_EXCHANGE = "mq_log"

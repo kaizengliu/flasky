@@ -10,15 +10,15 @@ import testing
 
 __all__ = ['setting']
 
-current_evn = os.environ.get('APPLICATION_ENV') or "development"
+current_env = os.environ.get('APPLICATION_ENV') or "development"
 
 setting = {
     "development": development,
     "production": production,
     "testing": testing
-}.get(current_evn, "development")
+}.get(current_env, "development")
 
-print "current_env = %s" % current_evn
+print "current_env = %s" % current_env
 
 
 
