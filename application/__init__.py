@@ -4,9 +4,11 @@
 
 import os
 
-from flask import Flask, url_for, g
+import redis
+
+from flask import Flask, url_for, sessions
 from flask.ext.login import LoginManager, AnonymousUserMixin
-from threading import local
+from flask.ext.session import RedisSessionInterface
 
 from application.configure import setting
 from application.models.user import User
@@ -57,6 +59,11 @@ def configure_login_manager(app):
             return AnonymousUserMixin()
 
 
+def configure_redis_session_interface(app):
+    redis_client = redis.Redis(setting.REDIS_HOST, setting.REDIS_PORT)
+    app.session_interface = RedisSessionInterface(redis_client, 'session:')
+
+
 def create_app(configure=None):
     _app = Flask(setting.APP_NAME)
 
@@ -65,6 +72,7 @@ def create_app(configure=None):
     configure_blueprints(_app, Blueprints)
     configure_url_for_with_timestamp(_app)
     configure_login_manager(_app)
+    configure_redis_session_interface(_app)
 
     return _app
 
