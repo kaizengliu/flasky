@@ -17,13 +17,14 @@ auth_bp = Blueprint('auth', __name__, template_folder="../templates")
 @auth_bp.route('/login', methods=['POST', 'GET'])
 def login():
     form = LoginForm()
+    next_url = request.args.get('next', None) or url_for("index.index")
 
     context = {
         "form": form
     }
 
     if request.method == 'POST' and form.validate_on_submit():
-        return redirect(url_for("index.index"))
+        return redirect(next_url)
 
     return render_template("auth/login.html", **context)
 

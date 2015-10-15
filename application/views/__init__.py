@@ -4,3 +4,5 @@
 
 from index import index_bp
 from auth import auth_bp
+from test import test_bp
+

@@ -17,7 +17,9 @@ def index():
 
     return render_template("index/index.html", **context)
 
-@index_bp.route('/add')
+
+@index_bp.route('/test')
+@login_required
 def hello_world():
     return '<h1 style="color:red;">hello liuqingqing</h1>'
 

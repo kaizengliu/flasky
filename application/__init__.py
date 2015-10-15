@@ -6,7 +6,7 @@ import os
 
 import redis
 
-from flask import Flask, url_for, sessions
+from flask import Flask, url_for, sessions, g
 from flask.ext.login import LoginManager, AnonymousUserMixin
 from flask.ext.session import RedisSessionInterface
 
@@ -24,6 +24,9 @@ Blueprints = (
 def configure_blueprints(app, blueprints):
     for view, url_prefix in blueprints:
         app.register_blueprint(view, url_prefix=url_prefix)
+
+    # test subDomain
+    app.register_blueprint(views.test_bp)
 
 
 def configure_url_for_with_timestamp(app):
@@ -64,6 +67,17 @@ def configure_redis_session_interface(app):
     app.session_interface = RedisSessionInterface(redis_client, 'session:')
 
 
+def configure_subdomain(app):
+    @app.url_value_preprocessor
+    def add_subdomain_to_global(endpoint, values):
+        g.subdomain = values.pop('subdomain', None)
+
+    @app.url_defaults
+    def add_subdomain_to_url_params(endpoint, values):
+        if 'subdomain' not in values:
+            values['subdomain'] = g.subdomain
+
+
 def create_app(configure=None):
     _app = Flask(setting.APP_NAME)
 
@@ -73,6 +87,7 @@ def create_app(configure=None):
     configure_url_for_with_timestamp(_app)
     configure_login_manager(_app)
     configure_redis_session_interface(_app)
+    configure_subdomain(_app)
 
     return _app
 

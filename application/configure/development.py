@@ -6,6 +6,7 @@ from base import *
 
 DEBUG = True
 
+SERVER_NAME = 'lkz.com:5000'
 
 EMAIL_HOST = 'smtp.126.com'
 EMAIL_PORT = 25
