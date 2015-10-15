@@ -46,14 +46,11 @@ class MQHandler(Handler):
         channel = self.__conn.channel()
         channel.exchange_declare(exchange=self.exchange, type="topic")
 
-        channel.confirm_delivery()
+        channel.confirm_delivery()  # 确保每条消息及时发送成功
 
         return channel
 
     def publish_msg(self, routing_key, msg):
-        # 现在没有找到刷新消息到rabbitmq server的方法，所以暂时使用
-        # channel.close()方法来刷新消息. 再次发送消息时，需要重新建立channel
-
         if not self.__channel:
             self.__channel = self.get_channel()
 
